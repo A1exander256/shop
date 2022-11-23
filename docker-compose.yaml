@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  db:
+    container_name: shop-postgres
+    image: postgres
+    user: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: "shop"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "5432:5432"
+    networks:
+      - shop  
+    volumes:
+      - ./sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - postgres-data:/var/lib/postgresql/data/
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    
+networks:
+      shop:
+
+volumes:
+  postgres-data:
