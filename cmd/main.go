@@ -2,31 +2,28 @@ package main
 
 import (
 	"context"
+	"log"
 	"os"
 	"os/signal"
 	"syscall"
 
-	"github.com/alexander256/shop/models"
+	"github.com/alexander256/shop/config"
+	"github.com/alexander256/shop/logger"
 	"github.com/alexander256/shop/pkg/handler"
 	"github.com/alexander256/shop/pkg/service"
 	"github.com/alexander256/shop/pkg/storage"
 	"github.com/alexander256/shop/server"
-	"github.com/sirupsen/logrus"
 )
 
 func main() {
-	log := logrus.New()
-
-	cfgPostgres := models.ConfigPostgres{
-		Host:     "localhost",
-		Port:     "5432",
-		UserName: "postgres",
-		Password: "postgres",
-		DBName:   "shop",
-		SSLMode:  "disable",
+	config, err := config.InitCinfig()
+	if err != nil {
+		log.Fatal("error initializing configs :", err)
 	}
 
-	db, err := storage.NewPostgresDB(&cfgPostgres)
+	log := logger.InitLogger(config.Logger.Level)
+
+	db, err := storage.NewPostgresDB(&config.Postgres)
 	if err != nil {
 		log.Fatal("failed to initialize db : ", err)
 	}

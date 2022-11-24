@@ -11,7 +11,7 @@ var (
 	tableUsers = "users"
 )
 
-func NewPostgresDB(cfg *models.ConfigPostgres) (*sqlx.DB, error) {
+func NewPostgresDB(cfg *models.Postgres) (*sqlx.DB, error) {
 	dataSourceName := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
 		cfg.Host,
 		cfg.Port,

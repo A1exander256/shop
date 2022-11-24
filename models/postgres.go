@@ -1,10 +1,10 @@
 package models
 
-type ConfigPostgres struct {
-	Host     string
-	Port     string
-	UserName string
-	Password string
-	DBName   string
-	SSLMode  string
+type Postgres struct {
+	Host     string `json:"host"`
+	Port     string `json:"port"`
+	UserName string `json:"user_name"`
+	Password string `json:"password"`
+	DBName   string `json:"db_name"`
+	SSLMode  string `json:"ssl_mode"`
 }

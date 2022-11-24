@@ -1,0 +1,18 @@
+{
+    "logger":{
+        "level":"debug"
+    },
+    "gin":{
+        "port":"8181",
+        "mode":"debug"
+    },
+    "postgres":{
+       "host": "localhost",
+       "port":"5432",
+       "user_name":"postgres",
+       "password":"postgres",
+       "db_name":"shop",
+       "ssl_mode":"disable"
+    }
+
+}
