@@ -15,14 +15,19 @@ type User interface {
 	GetAll() ([]models.User, error)
 }
 
+type Order interface {
+	Create(order *models.Order) (int, error)
+}
 type Storage struct {
 	log *logrus.Logger
 	User
+	Order
 }
 
 func NewStorage(db *sqlx.DB, log *logrus.Logger) *Storage {
 	return &Storage{
-		log:  log,
-		User: NewUserStorage(db, log),
+		log:   log,
+		User:  NewUserStorage(db, log),
+		Order: NewOrderStorage(db, log),
 	}
 }

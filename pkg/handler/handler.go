@@ -27,13 +27,18 @@ func (h *Handler) InitRoutes(ginMode string) *gin.Engine {
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-	user := router.Group("/users")
+	users := router.Group("/users")
 	{
-		user.POST("/", h.createUser)
-		user.PUT("/:id", h.updateUser)
-		user.DELETE("/:id", h.deleteUser)
-		user.GET("/:id", h.getUserById)
-		user.GET("/", h.getAllUsers)
+		users.POST("/", h.createUser)
+		users.PUT("/:id", h.updateUser)
+		users.DELETE("/:id", h.deleteUser)
+		users.GET("/:id", h.getUserById)
+		users.GET("/", h.getAllUsers)
+	}
+
+	orders := router.Group("/orders")
+	{
+		orders.POST("/", h.createOrder)
 	}
 	return router
 }

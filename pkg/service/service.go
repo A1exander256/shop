@@ -14,14 +14,19 @@ type User interface {
 	GetAll() ([]models.User, error)
 }
 
+type Order interface {
+	Create(order *models.Order) (int, error)
+}
 type Service struct {
 	log *logrus.Logger
 	User
+	Order
 }
 
 func NewService(storage *storage.Storage, log *logrus.Logger) *Service {
 	return &Service{
-		log:  log,
-		User: NewUserService(storage.User, log),
+		log:   log,
+		User:  NewUserService(storage.User, log),
+		Order: NewOrderService(storage.Order, log),
 	}
 }

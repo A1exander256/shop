@@ -90,7 +90,7 @@ func (s *UserStorage) GetById(userId int) (models.User, error) {
 
 func (s *UserStorage) GetAll() ([]models.User, error) {
 	var users []models.User
-	query := fmt.Sprintf("SELECT * FROM %s", tableUsers)
+	query := fmt.Sprintf("SELECT * FROM %s users ORDER BY users.uuid", tableUsers)
 	err := s.db.Select(&users, query)
 	return users, err
 }
