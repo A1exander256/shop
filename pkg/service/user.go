@@ -29,3 +29,11 @@ func (s *UserService) Update(user *models.User) error {
 func (s *UserService) Delete(userId int) error {
 	return s.storage.Delete(userId)
 }
+
+func (s *UserService) GetById(userId int) (models.User, error) {
+	return s.storage.GetById(userId)
+}
+
+func (s *UserService) GetAll() ([]models.User, error) {
+	return s.storage.GetAll()
+}

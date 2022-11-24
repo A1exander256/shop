@@ -1,0 +1,242 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API Server for Shop app Application",
+        "title": "Shop APP API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8181",
+    "basePath": "/",
+    "paths": {
+        "/users": {
+            "get": {
+                "description": "get all users",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get all Users",
+                "operationId": "get-all-users",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.User"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.messageError"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "create user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Create user",
+                "operationId": "create-user",
+                "parameters": [
+                    {
+                        "description": "user info",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handler.outputCreateUser"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.messageError"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/:id": {
+            "get": {
+                "description": "get user by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get User By Id",
+                "operationId": "get-user-by-id",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.messageError"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Update user",
+                "operationId": "update-user",
+                "parameters": [
+                    {
+                        "description": "user info",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handler.outputUpdateUser"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.messageError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Delete user",
+                "operationId": "create-user",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handler.outputDeleteUser"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.messageError"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "handler.messageError": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "handler.outputCreateUser": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "handler.outputDeleteUser": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "handler.outputUpdateUser": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.User": {
+            "type": "object",
+            "properties": {
+                "age": {
+                    "type": "integer",
+                    "maximum": 100,
+                    "minimum": 0
+                },
+                "firstname": {
+                    "type": "string"
+                },
+                "middlename": {
+                    "type": "string"
+                },
+                "sex": {
+                    "type": "string",
+                    "enum": [
+                        "man",
+                        "woman"
+                    ]
+                },
+                "surname": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

@@ -15,6 +15,12 @@ import (
 	"github.com/alexander256/shop/server"
 )
 
+// @title Shop APP API
+// @version 1.0
+// @description API Server for Shop app Application
+
+// @host localhost:8181
+// @BasePath /
 func main() {
 	config, err := config.InitCinfig()
 	if err != nil {
@@ -35,7 +41,7 @@ func main() {
 	srv := server.NewServer()
 
 	go func() {
-		if err := srv.Run("8080", handler.InitRoutes("debug")); err != nil {
+		if err := srv.Run(config.Gin.Port, handler.InitRoutes(config.Gin.Mode)); err != nil {
 			log.Fatalf("error occured while running http server: %s", err.Error())
 		}
 	}()

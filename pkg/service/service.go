@@ -10,6 +10,8 @@ type User interface {
 	Create(user *models.User) (int, error)
 	Update(user *models.User) error
 	Delete(userId int) error
+	GetById(userId int) (models.User, error)
+	GetAll() ([]models.User, error)
 }
 
 type Service struct {

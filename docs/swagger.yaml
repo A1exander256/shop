@@ -1,0 +1,161 @@
+basePath: /
+definitions:
+  handler.messageError:
+    properties:
+      message:
+        type: string
+    type: object
+  handler.outputCreateUser:
+    properties:
+      id:
+        type: integer
+    type: object
+  handler.outputDeleteUser:
+    properties:
+      status:
+        type: string
+    type: object
+  handler.outputUpdateUser:
+    properties:
+      status:
+        type: string
+    type: object
+  models.User:
+    properties:
+      age:
+        maximum: 100
+        minimum: 0
+        type: integer
+      firstname:
+        type: string
+      middlename:
+        type: string
+      sex:
+        enum:
+        - man
+        - woman
+        type: string
+      surname:
+        type: string
+    type: object
+host: localhost:8181
+info:
+  contact: {}
+  description: API Server for Shop app Application
+  title: Shop APP API
+  version: "1.0"
+paths:
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: get all users
+      operationId: get-all-users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.User'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.messageError'
+      summary: Get all Users
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: create user
+      operationId: create-user
+      parameters:
+      - description: user info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.outputCreateUser'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.messageError'
+      summary: Create user
+      tags:
+      - users
+  /users/:id:
+    delete:
+      consumes:
+      - application/json
+      description: delete user
+      operationId: create-user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.outputDeleteUser'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.messageError'
+      summary: Delete user
+      tags:
+      - users
+    get:
+      consumes:
+      - application/json
+      description: get user by id
+      operationId: get-user-by-id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.messageError'
+      summary: Get User By Id
+      tags:
+      - users
+    put:
+      consumes:
+      - application/json
+      description: update user
+      operationId: update-user
+      parameters:
+      - description: user info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.outputUpdateUser'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.messageError'
+      summary: Update user
+      tags:
+      - users
+swagger: "2.0"

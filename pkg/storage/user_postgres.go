@@ -77,7 +77,20 @@ func (s *UserStorage) Update(user *models.User) error {
 
 func (s *UserStorage) Delete(userId int) error {
 	query := fmt.Sprintf("DELETE FROM %s users WHERE users.uuid=$1", tableUsers)
-
 	_, err := s.db.Exec(query, userId)
 	return err
+}
+
+func (s *UserStorage) GetById(userId int) (models.User, error) {
+	var user models.User
+	query := fmt.Sprintf("SELECT * FROM %s users WHERE users.uuid=$1", tableUsers)
+	err := s.db.Get(&user, query, userId)
+	return user, err
+}
+
+func (s *UserStorage) GetAll() ([]models.User, error) {
+	var users []models.User
+	query := fmt.Sprintf("SELECT * FROM %s", tableUsers)
+	err := s.db.Select(&users, query)
+	return users, err
 }
