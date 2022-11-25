@@ -17,16 +17,22 @@ type User interface {
 type Order interface {
 	Create(order *models.Order) (int, error)
 }
+
+type Product interface {
+	Create(product *models.Product) (int, error)
+}
 type Service struct {
 	log *logrus.Logger
 	User
 	Order
+	Product
 }
 
 func NewService(storage *storage.Storage, log *logrus.Logger) *Service {
 	return &Service{
-		log:   log,
-		User:  NewUserService(storage.User, log),
-		Order: NewOrderService(storage.Order, log),
+		log:     log,
+		User:    NewUserService(storage.User, log),
+		Order:   NewOrderService(storage.Order, log),
+		Product: NewProductService(storage.Product, log),
 	}
 }

@@ -66,7 +66,7 @@ func (h *Handler) updateUser(c *gin.Context) {
 		return
 	}
 
-	input.Uuid = id
+	input.Id = id
 	if err = h.service.User.Update(&input); err != nil {
 		h.responseError(c, http.StatusInternalServerError, err.Error())
 		return

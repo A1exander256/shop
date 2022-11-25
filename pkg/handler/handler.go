@@ -40,5 +40,10 @@ func (h *Handler) InitRoutes(ginMode string) *gin.Engine {
 	{
 		orders.POST("/", h.createOrder)
 	}
+
+	products := router.Group("/products")
+	{
+		products.POST("/", h.createProduct)
+	}
 	return router
 }

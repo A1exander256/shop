@@ -23,7 +23,7 @@ func NewUserStorage(db *sqlx.DB, log *logrus.Logger) *UserStorage {
 
 func (s *UserStorage) Create(user *models.User) (int, error) {
 	var id int
-	query := fmt.Sprintf("INSERT INTO %s (firstname, surname, middlename, sex, age) values ($1, $2, $3, $4, $5) RETURNING uuid", tableUsers)
+	query := fmt.Sprintf("INSERT INTO %s (firstname, surname, middlename, sex, age) values ($1, $2, $3, $4, $5) RETURNING id", tableUsers)
 
 	row := s.db.QueryRow(query, user.Firstname, user.Surname, user.Middlename, user.Sex, user.Age)
 	if err := row.Scan(&id); err != nil {
@@ -67,30 +67,30 @@ func (s *UserStorage) Update(user *models.User) error {
 	}
 
 	setQuery := strings.Join(setValue, ", ")
-	query := fmt.Sprintf("UPDATE %s users SET %s WHERE users.uuid = $%d", tableUsers, setQuery, argId)
+	query := fmt.Sprintf("UPDATE %s users SET %s WHERE users.id = $%d", tableUsers, setQuery, argId)
 
-	args = append(args, user.Uuid)
+	args = append(args, user.Id)
 
 	_, err := s.db.Exec(query, args...)
 	return err
 }
 
 func (s *UserStorage) Delete(userId int) error {
-	query := fmt.Sprintf("DELETE FROM %s users WHERE users.uuid=$1", tableUsers)
+	query := fmt.Sprintf("DELETE FROM %s users WHERE users.id=$1", tableUsers)
 	_, err := s.db.Exec(query, userId)
 	return err
 }
 
 func (s *UserStorage) GetById(userId int) (models.User, error) {
 	var user models.User
-	query := fmt.Sprintf("SELECT * FROM %s users WHERE users.uuid=$1", tableUsers)
+	query := fmt.Sprintf("SELECT * FROM %s users WHERE users.id=$1", tableUsers)
 	err := s.db.Get(&user, query, userId)
 	return user, err
 }
 
 func (s *UserStorage) GetAll() ([]models.User, error) {
 	var users []models.User
-	query := fmt.Sprintf("SELECT * FROM %s users ORDER BY users.uuid", tableUsers)
+	query := fmt.Sprintf("SELECT * FROM %s users ORDER BY users.id", tableUsers)
 	err := s.db.Select(&users, query)
 	return users, err
 }

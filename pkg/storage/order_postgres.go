@@ -22,7 +22,7 @@ func NewOrderStorage(db *sqlx.DB, log *logrus.Logger) *OrderStorage {
 
 func (s *OrderStorage) Create(order *models.Order) (int, error) {
 	var id int
-	query := fmt.Sprintf("INSERT INTO %s (user_id) values ($1) RETURNING uuid", tableOrders)
+	query := fmt.Sprintf("INSERT INTO %s (user_id) values ($1) RETURNING id", tableOrders)
 
 	row := s.db.QueryRow(query, order.UserId)
 	if err := row.Scan(&id); err != nil {
