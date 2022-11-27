@@ -20,6 +20,8 @@ type Order interface {
 
 type Product interface {
 	Create(product *models.Product) (int, error)
+	Update(product *models.Product) error
+	Delete(productId int) error
 }
 type Service struct {
 	log *logrus.Logger

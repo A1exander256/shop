@@ -44,6 +44,8 @@ func (h *Handler) InitRoutes(ginMode string) *gin.Engine {
 	products := router.Group("/products")
 	{
 		products.POST("/", h.createProduct)
+		products.PUT("/:id", h.updateProduct)
+		products.DELETE("/:id", h.deleteProduct)
 	}
 	return router
 }

@@ -21,3 +21,11 @@ func NewProductService(storage storage.Product, log *logrus.Logger) *ProductServ
 func (s *ProductService) Create(product *models.Product) (int, error) {
 	return s.storage.Create(product)
 }
+
+func (s *ProductService) Update(product *models.Product) error {
+	return s.storage.Update(product)
+}
+
+func (s *ProductService) Delete(productId int) error {
+	return s.storage.Delete(productId)
+}

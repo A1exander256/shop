@@ -25,7 +25,8 @@ CREATE TABLE products
 
 CREATE TABLE prices
 (
+    id serial PRIMARY KEY not null UNIQUE,
     product_id int REFERENCES products (id) ON DELETE CASCADE not null,
     currency VARCHAR(3) NOT NULL,
-    price NUMERIC(2) DEFAULT 0    
+    price NUMERIC(10, 2) DEFAULT 0    
 );

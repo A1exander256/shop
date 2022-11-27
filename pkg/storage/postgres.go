@@ -8,8 +8,10 @@ import (
 )
 
 var (
-	tableUsers  = "users"
-	tableOrders = "orders"
+	tableUsers    = "users"
+	tableOrders   = "orders"
+	tableProducts = "products"
+	tablePrices   = "prices"
 )
 
 func NewPostgresDB(cfg *models.Postgres) (*sqlx.DB, error) {
