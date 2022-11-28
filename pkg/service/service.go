@@ -22,6 +22,8 @@ type Product interface {
 	Create(product *models.Product) (int, error)
 	Update(product *models.Product) error
 	Delete(productId int) error
+	GetById(productId int) (models.Product, error)
+	GetAll() ([]models.Product, error)
 }
 type Service struct {
 	log *logrus.Logger

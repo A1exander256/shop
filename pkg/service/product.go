@@ -29,3 +29,11 @@ func (s *ProductService) Update(product *models.Product) error {
 func (s *ProductService) Delete(productId int) error {
 	return s.storage.Delete(productId)
 }
+
+func (s *ProductService) GetById(productId int) (models.Product, error) {
+	return s.storage.GetById(productId)
+}
+
+func (s *ProductService) GetAll() ([]models.Product, error) {
+	return s.storage.GetAll()
+}

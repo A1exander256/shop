@@ -107,3 +107,41 @@ func (s *ProductStorage) Delete(productId int) error {
 	_, err := s.db.Exec(query, productId)
 	return err
 }
+
+func (s *ProductStorage) GetById(productId int) (models.Product, error) {
+	var product models.Product
+	query := fmt.Sprintf("SELECT * FROM %s products WHERE products.id=$1", tableProducts)
+	err := s.db.Get(&product, query, productId)
+	if err != nil {
+		return product, err
+	}
+
+	var prices []models.PriceProduct
+	queryPrice := fmt.Sprintf("SELECT * FROM %s prices ORDER BY prices.product_id=$1", tablePrices)
+	if err = s.db.Select(&prices, queryPrice, productId); err != nil {
+		return product, err
+	}
+
+	product.Prices = prices
+	return product, err
+}
+
+func (s *ProductStorage) GetAll() ([]models.Product, error) {
+	var products []models.Product
+	queryProducts := fmt.Sprintf("SELECT * FROM %s products", tableProducts)
+	err := s.db.Select(&products, queryProducts)
+	if err != nil {
+		return products, err
+	}
+
+	for index, product := range products {
+		var prices []models.PriceProduct
+		queryPrices := fmt.Sprintf("SELECT * FROM %s prices WHERE prices.product_id=$1", tablePrices)
+		err := s.db.Select(&prices, queryPrices, product.Id)
+		if err != nil {
+			return products, err
+		}
+		products[index].Prices = prices
+	}
+	return products, nil
+}
