@@ -12,7 +12,9 @@ CREATE TABLE users
 CREATE TABLE orders
 (
     id serial PRIMARY KEY not null UNIQUE,
-    user_id int REFERENCES users (id) ON DELETE CASCADE not null 
+    user_id int REFERENCES users (id) ON DELETE CASCADE not null,
+    currency VARCHAR(3) NOT NULL CHECK( currency in ('BYN', 'EUR', 'USD')),
+    total_cost NUMERIC(10, 2) DEFAULT 0 
 );
 
 CREATE TABLE products
@@ -29,4 +31,12 @@ CREATE TABLE prices
     product_id int REFERENCES products (id) ON DELETE CASCADE not null,
     currency VARCHAR(3) NOT NULL,
     price NUMERIC(10, 2) DEFAULT 0    
+);
+
+CREATE TABLE products_order
+(
+    id SERIAL PRIMARY KEY NOT NULL UNIQUE,
+    order_id int REFERENCES orders (id) ON DELETE CASCADE not null,
+    product_id int REFERENCES products (id) ON DELETE CASCADE not null,
+    count int CHECK (count > 0) DEFAULT 1  
 );
